@@ -1,12 +1,12 @@
 {
-  "name": "react-component-skeleton",
+  "name": "react-s3-upload-modal",
   "version": "0.1.0",
-  "description": "A simple responsive sidebar component for React",
+  "description": "A React Modal Component to upload files to AWS S3",
   "keywords": [
     "react",
     "react-component"
   ],
-  "main": "dist/bundle.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "node tools/devServer.js",
     "build": "NODE_ENV=production ./tools/build.sh",
