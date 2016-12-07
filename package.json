@@ -43,7 +43,11 @@
     "react-dom": "^15.3.0"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "immutability-helper": "^2.0.0",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "react-dropzone": "^3.7.3",
+    "react-icons": "^2.2.1"
   }
 }

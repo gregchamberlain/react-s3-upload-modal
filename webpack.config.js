@@ -22,7 +22,7 @@ module.exports = {
     loaders: [{
       test: /\.js?$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'site')
+      include: [path.join(__dirname, 'site'), path.join(__dirname, 'src')]
     },
     {
      test: /\.json?$/,
