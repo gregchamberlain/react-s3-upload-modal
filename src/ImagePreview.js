@@ -11,7 +11,7 @@ const ImagePreview = ({ src, onRemove, progress }) => (
       )}
       <img src={src} style={styles.image} />
       { progress && (
-        <div style={styles.previewOverlay}>
+        <div style={styles.overlay}>
           { progress === 100 ? (
             <Check />
           ) : (
@@ -40,6 +40,7 @@ const styles = {
     position: 'absolute',
     width: '100%',
     height: '100%',
+    fontSize: 48,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -73,10 +74,11 @@ const styles = {
     padding: 3,
     boxSizing: 'border-box',
   },
-  progressBar: pctDone => ({
+  progressBar: progress => ({
     height: 20,
     borderRadius: 10,
     minWidth: 20,
+    width: `${progress}%`,
     backgroundColor: '#4CAF50',
   })
 }

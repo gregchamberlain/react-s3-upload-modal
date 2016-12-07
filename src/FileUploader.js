@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import axios from 'axios';
 import UploadIcon from 'react-icons/lib/md/cloud-upload';
 
+import { parseFiles } from './utils';
 import ImagePreview from './ImagePreview';
 import Modal from './Modal';
 
@@ -45,14 +46,7 @@ class ImageUploader extends Component {
 
   upload = () => {
     this.setState({ uploading: true });
-    const files = this.state.files.map(file => {
-      const splitFilename = file.name.split('.');
-      const filename = `${Math.random().toString(36).substr(2,20)}.${splitFilename[splitFilename.length - 1]}`;
-      return {
-        name: filename,
-        type: file.type
-      };
-    });
+    const files = parseFiles(this.state.files);
     this.props.getSignedUrls(files).then(signedUrls => {
       let complete = 0;
       let urls = [];
