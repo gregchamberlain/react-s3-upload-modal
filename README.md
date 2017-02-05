@@ -3,3 +3,5 @@
 ```
 npm install --save react-s3-upload-modal
 ```
+
+![Example](assets/example.gif)

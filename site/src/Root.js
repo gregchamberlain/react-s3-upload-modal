@@ -8,7 +8,8 @@ class Root extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalOpen: false
+      isModalOpen: false,
+      images: []
     }
   }
 
@@ -28,6 +29,13 @@ class Root extends Component {
     }
   }
 
+  onComplete = urls => {
+    this.setState({
+      isModalOpen: false,
+      images: urls
+    })
+  }
+
   render() {
     return (
       <div>
@@ -36,11 +44,37 @@ class Root extends Component {
           isOpen={this.state.isModalOpen}
           onRequestClose={this.setModal(false)}
           getSignedUrls={this.getSignedUrls}
-          onComplete={urls => console.log(urls)}
+          onComplete={this.onComplete}
         />
+        <div style={styles.images}>
+          {this.state.images.map(url => (
+            <div key={url} style={styles.preview}>
+              <img src={url} style={styles.image}/>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
+}
+
+const styles = {
+  images: {
+    display: 'flex'
+  },
+  preview: {
+    position: 'relative',
+    height: 150,
+    width: 150,
+    margin: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    maxWidth: 150,
+    maxHeight: 150
+  },
 }
 export default Root;
