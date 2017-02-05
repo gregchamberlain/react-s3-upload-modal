@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import FileUploader from '../../src';
 
@@ -15,16 +16,22 @@ class Root extends Component {
     this.setState({ isModalOpen: bool })
   }
 
+  getSignedUrls = files => {
+    return axios.post('/sign', { files }).then(resp => {
+      return resp.data;
+    }).catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div>
         <button onClick={this.setModal(true)}>Open Modal</button>
-        <FileUploader isOpen={this.state.isModalOpen} onRequestClose={this.setModal(false)} getSignedUrls={(a) => {
-          console.log(a);
-          return new Promise(function(resolve, reject) {
-            resolve([]);
-          });
-        }}/>
+        <FileUploader
+          isOpen={this.state.isModalOpen}
+          onRequestClose={this.setModal(false)}
+          getSignedUrls={this.getSignedUrls}
+          onComplete={urls => console.log(urls)}
+        />
       </div>
     );
   }
