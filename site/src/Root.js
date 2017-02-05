@@ -17,9 +17,15 @@ class Root extends Component {
   }
 
   getSignedUrls = files => {
-    return axios.post('/sign', { files }).then(resp => {
-      return resp.data;
-    }).catch(err => console.log(err));
+    if (process.env.NODE_ENV === 'production') {
+      return new Promise((resolve, reject) => {
+        resolve([]);
+      });
+    } else {
+      return axios.post('/sign', { files }).then(resp => {
+        return resp.data;
+      }).catch(err => console.log(err));
+    }
   }
 
   render() {
