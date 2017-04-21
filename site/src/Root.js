@@ -29,10 +29,11 @@ class Root extends Component {
     }
   }
 
-  onComplete = urls => {
+  onComplete = images => {
+    console.log(images);
     this.setState({
       isModalOpen: false,
-      images: urls
+      images
     })
   }
 
@@ -47,9 +48,9 @@ class Root extends Component {
           onComplete={this.onComplete}
         />
         <div style={styles.images}>
-          {this.state.images.map(url => (
-            <div key={url} style={styles.preview}>
-              <img src={url} style={styles.image}/>
+          {this.state.images.map(image => (
+            <div key={image.url} style={styles.preview}>
+              <img src={image.url} style={styles.image}/>
             </div>
           ))}
         </div>

@@ -67,7 +67,7 @@ class ImageUploader extends Component {
         };
         axios.put(signedUrls[i], this.state.files[i], options).then(resp => {
           complete += 1;
-          urls.push(url);
+          urls.push({ url, file });
           this.setState({ uploading: false });
           if (complete === files.length) this.props.onComplete(urls);
         }).catch(err => {

@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.post('/sign', (req, res) => {
   const signedUrls = req.body.files.map(file => {
     const params = {
-      Bucket: 'olwisconse',
+      Bucket: 'react-s3-upload-modal',
       Key: file.name,
       Expires: 60,
       ContentType: file.type,
