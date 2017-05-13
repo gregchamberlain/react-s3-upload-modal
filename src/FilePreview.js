@@ -2,14 +2,14 @@ import React from 'react';
 import Close from 'react-icons/lib/md/close';
 import Check from 'react-icons/lib/md/check';
 
-const ImagePreview = ({ file, onRemove, progress }) => (
+const ImagePreview = ({ src, onRemove, progress }) => (
   <div style={styles.preview}>
       { !progress && (
         <div style={styles.remove} onClick={onRemove}>
           <Close />
         </div>
       )}
-      <img file={file} style={styles.image} />
+      <img src={src} style={styles.image} />
       { progress && (
         <div style={styles.overlay}>
           { progress === 100 ? (

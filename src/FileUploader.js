@@ -5,7 +5,7 @@ import axios from 'axios';
 import UploadIcon from 'react-icons/lib/md/cloud-upload';
 
 import { parseFiles } from './utils';
-import ImagePreview from './ImagePreview';
+import FileItem from './FileItem';
 import Modal from './Modal';
 
 class ImageUploader extends Component {
@@ -27,6 +27,7 @@ class ImageUploader extends Component {
 
   onDrop = (acceptedFiles, rejectedFiles) => {
     if (acceptedFiles.length) {
+      console.log(acceptedFiles)
       this.setState(update(this.state, {
         files: {
           $push: acceptedFiles
@@ -106,9 +107,9 @@ class ImageUploader extends Component {
             style={styles.dropzone}
           >
             {this.state.files.map((file, idx) => (
-              <ImagePreview
+              <FileItem
                 key={file.preview}
-                src={file.preview}
+                file={file}
                 progress={this.state.progress[idx]}
                 onRemove={this.removeFile(idx)}
               />
