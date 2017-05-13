@@ -1,10 +1,13 @@
 import React from 'react';
 import ImagePreview from './ImagePreview';
+import VideoPreview from './VideoPreview';
 
 const FilePreview = ({ file }) => {
   switch (file.type.split('/')[0]) {
     case 'image':
       return <ImagePreview file={file} />
+    case 'video':
+      return <VideoPreview file={file} />
     default: 
       return <DefaultPreview file={file} />
   }
