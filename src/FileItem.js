@@ -1,15 +1,16 @@
 import React from 'react';
 import Close from 'react-icons/lib/md/close';
 import Check from 'react-icons/lib/md/check';
+import FilePreview from './previews/FilePreview';
 
-const ImagePreview = ({ src, onRemove, progress }) => (
+const FileItem = ({ file, onRemove, progress }) => (
   <div style={styles.preview}>
       { !progress && (
         <div style={styles.remove} onClick={onRemove}>
           <Close />
         </div>
       )}
-      <img src={src} style={styles.image} />
+      <FilePreview file={file} />
       { progress && (
         <div style={styles.overlay}>
           { progress === 100 ? (
@@ -83,4 +84,4 @@ const styles = {
   })
 }
 
-export default ImagePreview;
+export default FileItem;
