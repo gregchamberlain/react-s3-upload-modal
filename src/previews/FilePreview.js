@@ -3,14 +3,16 @@ import ImagePreview from './ImagePreview';
 import VideoPreview from './VideoPreview';
 
 const FilePreview = ({ file }) => {
+  let Preview = DefaultPreview;
   switch (file.type.split('/')[0]) {
     case 'image':
-      return <ImagePreview file={file} />
+      Preview = ImagePreview;
+      break;
     case 'video':
-      return <VideoPreview file={file} />
-    default: 
-      return <DefaultPreview file={file} />
+      Preview = VideoPreview;
+      break;
   }
+  return <Preview file={file} />
 };
 
 const DefaultPreview = ({ file }) => (
@@ -25,6 +27,8 @@ const style = {
   height: '100%',
   alignItems: 'center',
   justifyContent: 'center',
+  fontWeight: 'bold',
+  color: '#eee'
 };
 
 export default FilePreview;
