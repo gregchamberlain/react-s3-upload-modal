@@ -81,6 +81,7 @@ const styles = {
     minWidth: 20,
     width: `${progress}%`,
     backgroundColor: '#4CAF50',
+    transition: 'width ease-in 0.2s'
   })
 }
 
