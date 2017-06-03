@@ -1,6 +1,6 @@
 {
   "name": "react-s3-upload-modal",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A React Modal Component to upload files to AWS S3",
   "keywords": [
     "react",
