@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import update from 'immutability-helper';
 import axios from 'axios';
@@ -9,13 +10,12 @@ import FileItem from './FileItem';
 import Modal from './Modal';
 
 class ImageUploader extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       files: [],
       progress: [],
-      uploading: false
+      uploading: false,
     };
   }
 
@@ -27,72 +27,87 @@ class ImageUploader extends Component {
 
   onDrop = (acceptedFiles, rejectedFiles) => {
     if (acceptedFiles.length) {
-      console.log(acceptedFiles)
-      this.setState(update(this.state, {
-        files: {
-          $push: acceptedFiles
-        }
-      }));
+      console.log(acceptedFiles);
+      this.setState(
+        update(this.state, {
+          files: {
+            $push: acceptedFiles,
+          },
+        }),
+      );
     }
-  }
+  };
 
-  removeFile = idx => e => {
+  removeFile = (idx) => (e) => {
     e.stopPropagation();
-    this.setState(update(this.state, {
-      files: {
-        $splice: [[idx, 1]]
-      }
-    }));
-  }
+    this.setState(
+      update(this.state, {
+        files: {
+          $splice: [[idx, 1]],
+        },
+      }),
+    );
+  };
 
   upload = () => {
     this.setState({ uploading: true });
     const files = parseFiles(this.state.files);
-    this.props.getSignedUrls(files).then(signedUrls => {
-      let complete = 0;
-      let urls = [];
-      for (let i=0; i<files.length; i++) {
-        const file = files[i];
-        const url = signedUrls[i].split('?')[0];
-        const options = {
-          headers: { 'Content-Type': file.type },
-          onUploadProgress: (e) => {
-            this.setState(update(this.state, {
-              progress: {
-                [i]: {
-                  $set: e.loaded / e.total * 100
-                }
-              }
-            }));
-          }
-        };
-        axios.put(signedUrls[i], this.state.files[i], options).then(resp => {
-          complete += 1;
-          urls.push({ url, file });
-          this.setState({ uploading: false });
-          if (complete === files.length) this.props.onComplete(urls);
-        }).catch(err => {
-          complete += 1;
-          console.error(err);
-          this.setState({ uploading: false });
-          if (complete === files.length) this.props.onComplete(urls);
-        });
-      }
-    }).catch(err => {
-      console.error(err);
-      this.setState({ uploading: false });
-    });
-  }
+    this.props
+      .getSignedUrls(files)
+      .then((signedUrls) => {
+        let complete = 0;
+        let urls = [];
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const url = signedUrls[i].split('?')[0];
+          const options = {
+            headers: { 'Content-Type': file.type },
+            onUploadProgress: (e) => {
+              this.setState(
+                update(this.state, {
+                  progress: {
+                    [i]: {
+                      $set: e.loaded / e.total * 100,
+                    },
+                  },
+                }),
+              );
+            },
+          };
+          axios
+            .put(signedUrls[i], this.state.files[i], options)
+            .then((resp) => {
+              complete += 1;
+              urls.push({ url, file });
+              this.setState({ uploading: false });
+              if (complete === files.length) this.props.onComplete(urls);
+            })
+            .catch((err) => {
+              complete += 1;
+              console.error(err);
+              this.setState({ uploading: false });
+              if (complete === files.length) this.props.onComplete(urls);
+            });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        this.setState({ uploading: false });
+      });
+  };
 
-  requestClose = e => {
+  requestClose = (e) => {
     if (this.state.files.length) {
-      if (!this.state.progress.length && confirm('Exit without uploading images?')) {
+      if (
+        !this.state.progress.length &&
+        confirm('Exit without uploading images?')
+      ) {
         this.props.onRequestClose(e);
       }
     } else {
       this.props.onRequestClose(e);
     }
-  }
+  };
 
   render() {
     const { multiple, accept, isOpen } = this.props;
@@ -114,17 +129,23 @@ class ImageUploader extends Component {
                 onRemove={this.removeFile(idx)}
               />
             ))}
-            { !this.state.files.length && (
+            {!this.state.files.length && (
               <div style={styles.instructions}>
-                <UploadIcon style={styles.icon}/>
+                <UploadIcon style={styles.icon} />
                 <div>Drop files here</div>
-                <div><small>or click to select files</small></div>
+                <div>
+                  <small>or click to select files</small>
+                </div>
               </div>
-            ) }
+            )}
           </Dropzone>
           <span style={styles.divider} />
-          <button style={styles.button} onClick={this.upload} disabled={this.state.uploading}>
-            { this.state.uploading ? 'Uploading...' : 'Upload' }
+          <button
+            style={styles.button}
+            onClick={this.upload}
+            disabled={this.state.uploading}
+          >
+            {this.state.uploading ? 'Uploading...' : 'Upload'}
           </button>
         </div>
       </Modal>
@@ -153,7 +174,7 @@ const styles = {
     justifyContent: 'center',
     flexWrap: 'wrap',
     overflow: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   icon: {
     fontSize: 64,
@@ -175,15 +196,15 @@ const styles = {
     border: 'none',
     outline: 'none',
   },
-}
-
-ImageUploader.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onComplete: PropTypes.func,
-  onRequestClose: PropTypes.func,
-  getSignedUrls: PropTypes.func.isRequired,
-  multiple: PropTypes.bool,
-  accept: PropTypes.string,
 };
+
+// ImageUploader.propTypes = {
+//   isOpen: PropTypes.bool.isRequired,
+//   onComplete: PropTypes.func,
+//   onRequestClose: PropTypes.func,
+//   getSignedUrls: PropTypes.func.isRequired,
+//   multiple: PropTypes.bool,
+//   accept: PropTypes.string,
+// };
 
 export default ImageUploader;

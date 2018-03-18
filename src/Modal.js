@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class Modal extends Component {
-
   componentDidMount() {
     window.addEventListener('keydown', this.keyListener);
   }
@@ -10,24 +9,30 @@ class Modal extends Component {
     window.removeEventListener('keydown', this.keyListener);
   }
 
-  keyListener = e => {
+  keyListener = (e) => {
     if (this.props.isOpen && e.keyCode === 27) {
       this.props.onRequestClose();
     }
-  }
+  };
 
-  close = e => {
-    if (e.target === this.refs.backdrop) {
+  close = (e) => {
+    if (e.target === this.backdropEl) {
       this.props.onRequestClose();
     }
-  }
+  };
 
   render() {
     if (!this.props.isOpen) return null;
 
     return (
-      <div style={styles.backdrop} onClick={this.close} ref="backdrop">
-          {this.props.children}
+      <div
+        style={styles.backdrop}
+        onClick={this.close}
+        ref={(el) => {
+          this.backdropEl = el;
+        }}
+      >
+        {this.props.children}
       </div>
     );
   }
@@ -44,8 +49,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9999,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)'
-  }
-}
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+};
 
 export default Modal;
